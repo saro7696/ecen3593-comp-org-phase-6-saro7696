@@ -58,5 +58,39 @@ event id_output : pipeline(pipe.ID)
         // Pipeline output
         // -----------------------------------------------------------------------------------------
 
+        uint32 id_instr_temp;
+        bool cache_ready, cache_response;
+        s_id_instr = r_id_clear? NOP_INSTRUCTION: id_instr_temp;
+
+        if_fetch.transport(CP_PHS_DATA, cache_ready, cache_response, id_instr_temp);
+
+        // OPCODE
+        s_id_opc = s_id_instr[31..25] :: s_id_instr[14..12] :: s_id_instr[6..0];
+
+        // First Source Reg
+        s_id_rs1 = s_id_instr [19..15];
+        // Second source register
+        s_id_rs2 = s_id_instr [24..20];
+        // Destination register
+        s_id_rd = s_id_instr [11..7];
+        // Immediate decode
+        s_id_immed = ( int32 ) ( int12 ) s_id_instr [31..20]; // I-type Immediate
+
+        // Read Input Registers
+        s_id_reg1 = rf_xpr_src1[s_id_rdid_rs1];
+        s_id_reg2 = rf_xpr_src2[s_id_rdid_rs2];
+
+        // Register Assignments
+        r_ex_pc = r_id_pc;
+
+        r_ex_immed = s_id_immed;
+        r_ex_rd = s_id_rd;
+        r_ex_reg1 = s_id_reg1;
+        r_ex_reg2 = s_id_reg2;
+        r_ex_instr = s_id_instr;
+        r_ex_aluop = s_id_aluop;
+        r_ex_alusrc = s_id_alusrc2;
+        r_ex_regwrite = s_id_regwrite;
+        r_ex_halt = s_id_halt;
     };
 };
