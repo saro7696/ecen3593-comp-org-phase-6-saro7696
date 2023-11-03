@@ -1,7 +1,8 @@
 {
   "generated-ca-sdk": [
     "/home/project/rv32i_ca",
-    "phase5_ca"
+    "phase5_ca",
+    "phase-5-saro7696"
   ],
   "generated-ia-sdk": [
     "/home/project/rv32i_ca"

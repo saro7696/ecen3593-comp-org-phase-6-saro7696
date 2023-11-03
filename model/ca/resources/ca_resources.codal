@@ -56,10 +56,10 @@ signal bit[INSTR_W] s_id_instr;
 signal bit[ALUOP_W] s_id_aluop;
 
 // Immediate
-signal bit[IMMED_W] s_id_immed;
+signal bit[ADDR_W] s_id_immed;
 
 // Destination Reg Signal
-signal bit[RD_W] s_id_rd;
+signal bit[RF_XPR_W] s_id_rd;
 
 //Control Signals
 signal bit[REGWRITE_W] s_id_regwrite;
@@ -71,12 +71,12 @@ signal bit[HALT_W] s_id_halt;
 signal bit[OPC_W] s_id_opc;
 
 // Register Signals for ALU
-signal bit[SRC1_W] s_id_rs1;
-signal bit[SRC2_W] s_id_rs2;
+signal bit[RF_XPR_W] s_id_rs1;
+signal bit[RF_XPR_W] s_id_rs2;
 
 // Output RegFile Read Signals
-signal bit[SRC1_W] s_id_reg1;
-signal bit[SRC2_W] s_id_reg2;
+signal bit[WORD_W] s_id_reg1;
+signal bit[WORD_W] s_id_reg2;
 
 // -------------------------------------------------------------------------------------------------
 // Execute stage
@@ -91,28 +91,28 @@ register bit[HALT_W] r_ex_halt            		{ pipeline = pipe.EX; };
 register bit[ALUOP_W] r_ex_aluop        		{ pipeline = pipe.EX; };
 
 // Destination Register
-register bit[RD_W] r_ex_rd                      { pipeline = pipe.EX; };
+register bit[RF_XPR_W] r_ex_rd                  { pipeline = pipe.EX; };
 
 // RegWrite Reg
 register bit[REGWRITE_W] r_ex_regwrite          { pipeline = pipe.EX; };
 
 // Source Reg 1
-register bit[SRC1_W] r_ex_reg1                  { pipeline = pipe.EX; };
+register bit[WORD_W] r_ex_reg1                  { pipeline = pipe.EX; };
 
 // ALUSRC Control Bit
 register bit[BOOLEAN_BIT] r_ex_alusrc2          { pipeline = pipe.EX; };
 
 // Source Reg2
-register bit[SRC1_W] r_ex_reg2                  { pipeline = pipe.EX; };
+register bit[WORD_W] r_ex_reg2                  { pipeline = pipe.EX; };
 
 // Immediate Source
-register bit[IMMED_W] r_ex_immed                { pipeline = pipe.EX; };
+register bit[ADDR_W] r_ex_immed                { pipeline = pipe.EX; };
 
 // Source Signal
 signal bit[SRC2_W] s_ex_src2;
 
 // ALU Output Signal
-signal bit[ALUOUT_W] s_ex_alu;
+signal bit[WORD_W] s_ex_alu;
 
 
 // -------------------------------------------------------------------------------------------------
@@ -127,10 +127,10 @@ register bit[INSTR_W] r_me_instr                { pipeline = pipe.ME; };
 register bit[REGWRITE_W] r_me_regwrite          { pipeline = pipe.ME; };
 
 // Destination Register
-register bit[RD_W] r_me_rd                      { pipeline = pipe.ME; };
+register bit[RF_XPR_W] r_me_rd                      { pipeline = pipe.ME; };
 
 // ALU Register
-register bit[ALUOUT_W] r_me_alu                 { pipeline = pipe.ME; };
+register bit[WORD_W] r_me_alu                 { pipeline = pipe.ME; };
 
 
 // -------------------------------------------------------------------------------------------------
@@ -142,10 +142,10 @@ register bit[ADDR_W] r_wb_pc            		{ pipeline = pipe.WB; };
 register bit[INSTR_W] r_wb_instr                { pipeline = pipe.WB; };
 
 // Destination Register
-register bit[RD_W] r_wb_rd                      { pipeline = pipe.WB; };
+register bit[RF_XPR_W] r_wb_rd                      { pipeline = pipe.WB; };
 
 // ALU Output Reg
-register bit[ALUOUT_W] r_wb_alu                 { pipeline = pipe.WB; };
+register bit[WORD_W] r_wb_alu                 { pipeline = pipe.WB; };
 
 // RegWrite Register
 register bit[REGWRITE_W] r_wb_regwrite          { pipeline = pipe.WB; };

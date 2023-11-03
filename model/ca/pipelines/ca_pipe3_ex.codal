@@ -63,7 +63,7 @@ event ex_output : pipeline(pipe.EX)
                 break ;
             default :
                 s_ex_src2 = 0;
-                codasip_fatal ( SRC2_ERROR , " Default case : % d \ n " , r_ex_alusrc2 ) ;
+                codasip_fatal (SRC2_ERROR, "Default case: %d\n", r_ex_alusrc2);
                 break ;
         }
 
@@ -79,7 +79,7 @@ event ex_output : pipeline(pipe.EX)
                 break ;
             default:
                 s_ex_alu = 0;
-                codasip_fatal( ALU_ERROR, " Default case : % d \ n ", s_ex_alu );
+                codasip_fatal(ALU_ERROR, "Default case: %d\n", s_ex_alu);
         }
 
         // Register Assignment   

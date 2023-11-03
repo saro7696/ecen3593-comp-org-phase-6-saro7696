@@ -133,4 +133,4 @@ element i_hw_alu_i
         s_id_halt = HALT_NOHALT;
     };
 
-}
+};
