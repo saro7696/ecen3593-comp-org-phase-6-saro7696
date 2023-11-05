@@ -38,6 +38,10 @@
 #define REGWRITE_W     bitsizeof(enum regwrite)
 #define SRC2_W         bitsizeof(enum src2)
 #define HALT_W         bitsizeof(enum halt)
+#define RFF1_W         bitsizeof(enum rff1_sel)
+#define RFF2_W         bitsizeof(enum rff2_sel)
+#define FWDA_W         bitsizeof(enum fwdA_sel)
+#define FWDB_W         bitsizeof(enum fwdB_sel)
 // -------------------------------------------------------------------------------------------------
 // Enumerations
 // -------------------------------------------------------------------------------------------------
@@ -49,7 +53,33 @@
 // -------------------------------------------------------------------------------------------------
 // ID stage
 // -------------------------------------------------------------------------------------------------
+enum rff1_sel
+{
+    switch(s_rff1_sel)
+    {
+        case 0:
+            r_ex_reg1 = r_wb_alu;
+            break;
+        case 1:
+            r_ex_reg1 = s_id_reg1;
+            break;     
+    }
+};
 
+enum rff2_sel
+{
+    switch(s_rff2_sel)
+    {
+        case 0:
+            r_ex_reg2 = r_wb_alu;
+            break;
+        case 1:
+            r_ex_reg2 = s_id_reg2;
+            break;
+          
+    }
+
+};
 // -------------------------------------------------------------------------------------------------
 // EX stage
 // -------------------------------------------------------------------------------------------------
@@ -79,7 +109,39 @@ enum halt
     HALT_HALT,
 };
 
+enum fwdA_sel
+{
+    switch(s_ex_fwdA_sl)
+    {
+        case 0:
+            s_ex_fwdAsel = r_ex_reg1;
+            break;
+        case 1:
+            s_ex_fwdAsel = s_wb_alu;
+            break;
+        case 2:
+            s_ex_fwdAsel = s_me_alu;
+            break;
+          
+    }
+};
 
+enum fwdB_sel
+{
+    switch(s_ex_fwdB_sl)
+    {
+        case 0:
+            s_ex_fwdBsel = r_ex_reg2;
+            break;
+        case 1:
+            s_ex_fwdBsel = s_wb_alu;
+            break;
+        case 2:
+            s_ex_fwdBsel = s_me_alu;
+            break;
+          
+    }
+};
 // -------------------------------------------------------------------------------------------------
 // ME stage
 // -------------------------------------------------------------------------------------------------

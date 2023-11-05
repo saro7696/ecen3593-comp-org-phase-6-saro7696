@@ -53,6 +53,58 @@ event ex_output : pipeline(pipe.EX)
 {
     semantics
     {
+        // rff1 control
+        if((r_me_rd == s_ex_src1) and (r_me_rd != 0) and (r_me_regwrite)){
+            s_ex_fwdA_sl = 2;
+            s_ex_fwdAsel = r_me_alu;
+        }
+        else if((r_wb_rd == s_ex_src1) and (r_wb_rd != 0) and (r_wb_regwrite)){
+            s_ex_fwdA_sl = 1;
+            s_ex_fwdAsel = r_wb_alu;
+        }
+        else{
+            s_ex_fwdA_sl = 0;
+            s_ex_fwdAsel = s_ex_src1;
+        }
+        // rff2 control
+        if((r_me_rd == s_ex_src2) and (r_me_rd != 0) and (r_me_regwrite)){
+            s_ex_fwdB_sl = 2;
+            
+        }
+        else if((r_wb_rd == s_ex_src2) and (r_wb_rd != 0) and (r_wb_regwrite)){
+            s_ex_fwdB_sl = 1;
+            
+        }
+        else{
+            s_ex_fwdB_sl = 0;
+            
+        }
+
+        switch (s_ex_fwdA_sl) {
+            case 1:
+                s_ex_fwdAsel = r_wb_alu;
+                break;
+            case 2:
+                s_ex_fwdAsel = r_me_alu;
+                break;
+            default:
+                s_ex_fwdAsel = s_ex_src1;
+                break;
+        }
+
+        switch (s_ex_fwdB_sl) {
+            case 1:
+                s_ex_fwdBsel = r_wb_alu;
+                break;
+            case 2:
+                s_ex_fwdBsel = r_me_alu;
+                break;
+            default:
+                s_ex_fwdBsel = s_ex_src2;
+                break;
+        }
+
+
         switch ( r_ex_alusrc2 )
         {
             case ALU2_REG :
@@ -81,6 +133,8 @@ event ex_output : pipeline(pipe.EX)
                 s_ex_alu = 0;
                 codasip_fatal(ALU_ERROR, "Default case: %d\n", s_ex_alu);
         }
+
+        
 
         // Register Assignment   
         r_me_pc = r_ex_pc;
